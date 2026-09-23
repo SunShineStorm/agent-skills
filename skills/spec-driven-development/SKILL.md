@@ -81,7 +81,7 @@ ASSUMPTIONS I'M MAKING:
 
 Don't silently fill in ambiguous requirements. The spec's entire purpose is to surface misunderstandings *before* code gets written — assumptions are the most dangerous form of misunderstanding.
 
-**Write a spec document covering these six core areas:**
+**Write a spec document covering these six core areas, plus any required scenario-specific sections:**
 
 1. **Objective** — What are we building and why? Who is the user? What does success look like?
 
@@ -112,6 +112,15 @@ Don't silently fill in ambiguous requirements. The spec's entire purpose is to s
    - **Ask first:** Database schema changes, adding dependencies, changing CI config
    - **Never do:** Commit secrets, edit vendor directories, remove failing tests without approval
 
+**React-specific addition:** If the work includes a React page or module, add a **UI Composition** section before implementation. Keep it reviewable, not exhaustive. Include:
+- A component / hook structure diagram (ASCII or Mermaid is fine)
+- The responsibility of each component and custom hook
+- State ownership and data-flow boundaries
+- Key props, callbacks, and side effects
+- Which pieces are presentational UI, orchestration, or data / behavior hooks
+
+This catches misplaced state, unclear responsibilities, and over-coupled components before code makes them expensive to change.
+
 **Spec template:**
 
 ```markdown
@@ -128,6 +137,28 @@ Don't silently fill in ambiguous requirements. The spec's entire purpose is to s
 
 ## Project Structure
 [Directory layout with descriptions]
+
+## UI Composition (React only)
+[Component / hook structure diagram plus a short responsibility breakdown. Omit this section for non-React work.]
+
+Example:
+```text
+DashboardPage
+├─ DashboardHeader
+├─ FiltersPanel
+│  └─ useDashboardFilters
+├─ MetricsGrid
+│  └─ MetricCard
+└─ ActivityTable
+   ├─ useActivityQuery
+   └─ usePagination
+```
+
+- `DashboardPage` — page-level orchestration, route params, shared state boundaries
+- `useDashboardFilters` — owns filter state and derived query params
+- `MetricsGrid` — presentational summary view of fetched metrics
+- `useActivityQuery` — data fetching, cache key construction, loading/error state
+- `usePagination` — page navigation state and handlers
 
 ## Code Style
 [Example snippet + key conventions]
