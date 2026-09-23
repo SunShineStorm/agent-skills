@@ -10,7 +10,13 @@ Begin by understanding what the user wants to build. Ask clarifying questions ab
 3. Tech stack preferences and constraints
 4. Known boundaries (what to always do, ask first about, and never do)
 
-Then generate a structured spec covering all six core areas: objective, commands, project structure, code style, testing strategy, and boundaries.
+Then generate a structured spec covering the six core areas plus any scenario-specific sections required by the skill.
+
+If the work includes a React page or module, include a UI Composition section with:
+- a component / hook structure diagram
+- the responsibility of each component and custom hook
+- state ownership and data-flow boundaries
+- key props, callbacks, and side effects
 
 If the request bundles several independently testable capabilities, first propose a capability map (module ids, dependency direction, build order) per the skill's Phase 0 and get it approved, then spec each module in dependency order.
 
